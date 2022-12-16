@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.6'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'war' // 2022.12.13(화) 19h20 수동 배포 시 추가
+}
+
+group = 'com.greenkey'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    // 2022.12.13(화) 10h55 추가해봄
+//	compile('com.fasterxml.jackson.core:jackson-databind:2.4.3')
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+//    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
+
+    // 2022.12.16(금) 16h50 Mockito 활용 Controller 슬라이스 테스트 작성하며
+    implementation 'com.google.code.gson:gson' // API 계층 슬라이스 테스트 - Spring Initializr에 없음
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
